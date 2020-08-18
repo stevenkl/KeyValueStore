@@ -2,6 +2,8 @@
 ;KVS.au3 by Steven Kleist <kleist.steven@gmail.com>
 ;Created with ISN AutoIt Studio v. 1.11
 ;*******************************************************************************
+#include <StringConstants.au3>
+
 #include "vendor\TCPServer.au3"
 #include "vendor\JSON.au3"
 
@@ -9,7 +11,7 @@
 Global $g__KVS_Storage = Null
 Global $g__KVS_StartupComplete = False
 
-#Region KVS Functions
+
 Func _KVS_Startup()
 	If $g__KVS_StartupComplete = False Then
 		$g__KVS_Storage = ObjCreate("Scripting.Dictionary")
@@ -27,6 +29,7 @@ Func _KVS_Startup()
 EndFunc
 
 
+#Region KVS Data Functions
 Func _KVS_Get($sKey)
 	If $g__KVS_Storage.Exists($sKey) Then
 		Return $g__KVS_Storage.Item($sKey)
@@ -54,7 +57,7 @@ EndFunc
 
 #Region KVS Server Functions
 Func _KVS_ServerOnConnect($iSocket, $sIP)
-	
+	ConsoleWrite(StringFormat("Client %s connected.", $sIP) & @CRLF)
 EndFunc
 
 
@@ -64,8 +67,13 @@ EndFunc
 
 
 Func _KVS_ServerReceive($iSocket, $sIP, $sData, $sPar)
-	
+	local $aData = StringSplit($sData, @CRLF, $STR_NOCOUNT)
+	ConsoleWrite(StringFormat("Data lines: %d", UBound($aData)) & @CRLF)
 EndFunc
 #EndRegion KVS Server Functions
 
+
+#Region KVS COM Functions
+
+#EndRegion KVS COM Functions
 
