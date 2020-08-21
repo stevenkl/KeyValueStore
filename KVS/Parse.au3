@@ -37,6 +37,11 @@ EndFunc
 Func _KVS_ParseDotCommand($sData)
 	local $aArgs = StringSplit($sData, " ", $STR_NOCOUNT)
 	local $sCmd = $aArgs[0]
+	local $cmd = __Dict()
+	
+	If $sCmd = ".info" Then
+		
+	EndIf
 EndFunc
 
 

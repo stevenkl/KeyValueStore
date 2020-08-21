@@ -15,6 +15,8 @@ EndFunc
 
 Func _KVS_ServerOnDisconnect($iSocket, $sIP)
 	ConsoleWrite(StringFormat("Client %s disconnected.", $sIP) & @CRLF)
+	
+	; CLearing session etc. for $iSocket
 EndFunc
 
 
@@ -35,6 +37,7 @@ Func _KVS_ServerOnReceive($iSocket, $sIP, $sData, $sPar)
 				
 			Case Else
 				$oCmd = _KVS_ParseStringCommand($sData)
+				
 		EndSwitch
 	
 		Local $result = _KVS_ExecuteCommand($oCmd, $sPar)
