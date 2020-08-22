@@ -43,7 +43,7 @@ Func _KVS_ServerOnReceive($iSocket, $sIP, $sData, $sPar)
 		Local $result = _KVS_ExecuteCommand($oCmd, $sPar)
 		
 		
-		_TCPServer_Send($iSocket, $result)
+		_TCPServer_Send($iSocket, $result & @CRLF)
 		
 	EndIf
 	

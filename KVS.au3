@@ -9,7 +9,8 @@
 
 #include "KVS\_utils.au3"
 #include "KVS\Init.au3"
-#include "KVS\Data.au3"
+#include "KVS\Commands.au3"
+#include "KVS\Sys_Commands.au3"
 #include "KVS\Message.au3"
 #include "KVS\Parse.au3"
 #include "KVS\Server.au3"
@@ -27,7 +28,9 @@ Global $g__KVS_Config          = __LoadConfig()
 Global $g__KVS_ValidCommands   = [ _
 	"get", _
 	"set", _
-	"del" _
+	"del", _
+	"incr", _
+	"decr" _
 ]
 
 
