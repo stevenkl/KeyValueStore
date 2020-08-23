@@ -29,13 +29,20 @@ Func _KVS_Startup()
 		$g__KVS_Storage = ObjCreate("Scripting.Dictionary")
 		$g__KVS_Storage.CompareMode = 1
 		
+		_KVS_LoadDatabase()
 		
+		If $g__KVS_Config("storage").Item("interval") <> 0 Then
+			AdlibRegister("_KVS_SaveDatabase", $g__KVS_Config("storage").Item("interval"))
+		EndIf
+		
+		OnAutoItExitRegister("_KVS_Shutdown")
 		$g__KVS_StartupComplete = True
 	EndIf
 EndFunc
 
 
 Func _KVS_Shutdown()
-	
+	_TCPServer_Stop()
+	_KVS_SaveDatabase()
 EndFunc
 #EndRegion KVS Startup/Shutdown Functions

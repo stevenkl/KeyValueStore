@@ -17,4 +17,9 @@ EndFunc
 Func _KVS_Command_Sys_Commands()
 	Return _JSON_Generate($g__KVS_ValidCommands, "", "", "", "", "", "", 0)
 EndFunc
+
+
+Func _KVS_Command_Sys_Save()
+	Return _KVS_SaveDatabase()
+EndFunc
 #EndRegion KVS System Command Functions

@@ -3,7 +3,7 @@
 #include-once
 
 #Region KVS Command Functions
-Func _KVS_ExecuteCommand($oCmd, $sPar)
+Func _KVS_ExecuteCommand($oCmd, $iSocket, $sIP, $sPar)
 	local $sFuncName = StringFormat("_KVS_Command_%s", $oCmd("command"))
 	local $aCallArgs = __Array()
 	

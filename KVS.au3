@@ -11,6 +11,7 @@
 #include "KVS\Init.au3"
 #include "KVS\Commands.au3"
 #include "KVS\Sys_Commands.au3"
+#include "KVS\Database.au3"
 #include "KVS\Message.au3"
 #include "KVS\Parse.au3"
 #include "KVS\Server.au3"
