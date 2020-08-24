@@ -3,12 +3,14 @@
 #include-once
 
 #Region KVS Command Functions
-Func _KVS_ExecuteCommand($oCmd, $iSocket, $sIP, $sPar)
+Func _KVS_ExecuteCommand($oCmd)
 	local $sFuncName = StringFormat("_KVS_Command_%s", $oCmd("command"))
 	local $aCallArgs = __Array()
 	
 	_ArrayAdd($aCallArgs, "CallArgArray")
 	$iResult = _ArrayConcatenate($aCallArgs, ($oCmd("arguments")) )
+	
+	If $oCmd("type") = "dotcommand" Then _ArrayAdd($aCallArgs, $oCmd)
 	
 	$sCommandResult = Call($sFuncName, $aCallArgs)
 	if @error then

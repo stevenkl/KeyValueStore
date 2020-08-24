@@ -34,6 +34,13 @@ Global $g__KVS_ValidCommands   = [ _
 	"decr" _
 ]
 
+Global $g__KVS_ValidDotCommands = [ _
+	".save", _
+	".info", _
+	".commands", _
+	".help" _
+]
+
 
 _KVS_Startup()
 While 1

@@ -47,6 +47,8 @@ Func _KVS_ParseDotCommand($sData)
 		$cmd.Add("arguments", _ArrayExtract($aArgs, 2, $aArgs[0]) )
 	EndIf
 	
+	$cmd.Add("type", "dotcommand")
+	
 	Return $cmd
 EndFunc
 

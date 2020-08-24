@@ -6,10 +6,7 @@
 
 #Region KVS Data Functions
 Func _KVS_LoadDatabase()
-	local $sfilePath = StringFormat( _
-		"%s\kvsdump.json", _
-		$g__KVS_Config("storage").Item("location") _
-	)
+	local $sfilePath = StringFormat("%s\kvsdump.json", $g__KVS_Config("storage").Item("location"))
 	
 	If FileExists($sFilePath) Then
 		local $hDB = FileOpen($sfilePath)
@@ -21,6 +18,7 @@ Func _KVS_LoadDatabase()
 		Return True
 	EndIf
 	Return False
+	
 EndFunc
 
 
