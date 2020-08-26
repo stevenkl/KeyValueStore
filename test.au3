@@ -1,4 +1,5 @@
 ;test.au3
+#include <Array.au3>
 
 Func _Dict()
 	local $d = ObjCreate("Scripting.Dictionary")
@@ -6,22 +7,25 @@ Func _Dict()
 	return $d
 EndFunc
 
-Global $oDotCommands = _Dict()
-
-
-
-Local $cmd = _Dict()
-Func _KVS_Command_Sys_Help()
-	ConsoleWrite("Some help here" & @CRLF)
+Func _Array()
+	local $a = []
+	_ArrayDelete($a, 0)
+	Return $a
 EndFunc
-$cmd.Add("fn", _KVS_Command_Sys_Help)
-$cmd.Add("help", "Some help text here")
 
 
-$oDotCommands.Add(".help", $cmd)
+Global $string = "test"
+ConsoleWrite(StringFormat("VarGetType($string) = %s", VarGetType($string)) & @CRLF)
 
+Global $integer = 123
+ConsoleWrite(StringFormat("VarGetType($integer) = %s", VarGetType($integer)) & @CRLF)
 
-For $name in $oDotCommands.Keys
-	ConsoleWrite(StringFormat("%s\t\t%s", $name, $oDotCommands($name).Item("help")) & @CRLF)
-	($oDotCommands($name).Item("fn"))()
-Next
+Global $float = 123.24
+ConsoleWrite(StringFormat("VarGetType($float) = %s", VarGetType($float)) & @CRLF)
+
+Global $array = _Array()
+ConsoleWrite(StringFormat("VarGetType($array) = %s", VarGetType($array)) & @CRLF)
+
+Global $dict = _Dict()
+ConsoleWrite(StringFormat("VarGetType($dict) = %s", VarGetType($dict)) & @CRLF)
+If IsObj($dict) Then ConsoleWrite(StringFormat("ObjName($dict) = %s", ObjName($dict)) & @CRLF)

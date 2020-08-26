@@ -2,6 +2,8 @@
 
 #include-once
 
+#include <WinAPIShPath.au3>
+
 #Region KVS Command Parsing Functions
 Func _KVS_ParseJsonObject($sdata)
 	local $oData = _JSON_Parse($sData)
@@ -10,6 +12,8 @@ Func _KVS_ParseJsonObject($sdata)
 	local $cmd = __Dict()
 	$cmd.Add("command", $oData("cmd"))
 	$cmd.Add("arguments", $oData("args"))
+	
+	$cmd.Add("type", "jsoncommand")
 	
 	Return $cmd
 	
@@ -29,13 +33,16 @@ Func _KVS_ParseJsonList($sData)
 	Next
 	$cmd.Add("arguments", $args)
 	
+	$cmd.Add("type", "jsoncommand")
+	
 	Return $cmd
 	
 EndFunc
 
 
 Func _KVS_ParseDotCommand($sData)
-	local $aArgs = StringSplit($sData, " ")
+;~ 	local $aArgs = StringSplit($sData, " ")
+	local $aArgs = _WinAPI_CommandLineToArgv($sData)
 	local $sCmd = $aArgs[1]
 	local $cmd = __Dict()
 	
@@ -54,12 +61,15 @@ EndFunc
 
 
 Func _KVS_ParseStringCommand($sData)
-	local $aArgs = StringSplit($sData, " ")
+;~ 	local $aArgs = StringSplit($sData, " ")
+	local $aArgs = _WinAPI_CommandLineToArgv($sData)
 	local $sCmd = $aArgs[1]
 	local $cmd = __Dict()
 	
 	$cmd.Add(	"command", 		$sCmd								)
 	$cmd.Add(	"arguments", 	_ArrayExtract($aArgs, 2, $aArgs[0])	)
+	
+	$cmd.Add("type", "stringcommand")
 	
 	Return $cmd
 EndFunc

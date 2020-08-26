@@ -10,6 +10,8 @@
 #include "KVS\_utils.au3"
 #include "KVS\Init.au3"
 #include "KVS\Commands.au3"
+#include "KVS\List_Commands.au3"
+#include "KVS\String_Commands.au3"
 #include "KVS\Sys_Commands.au3"
 #include "KVS\Database.au3"
 #include "KVS\Message.au3"
@@ -27,11 +29,18 @@ Global $g__KVS_StartupComplete = False
 Global $g__KVS_Config          = __LoadConfig()
 
 Global $g__KVS_ValidCommands   = [ _
+	"ping", _
 	"get", _
 	"set", _
 	"del", _
 	"incr", _
-	"decr" _
+	"decr", _
+	"exists", _
+	"keys", _
+	"type", _
+	"rpush", _
+	"llen", _
+	"lindex" _
 ]
 
 Global $g__KVS_ValidDotCommands = [ _
