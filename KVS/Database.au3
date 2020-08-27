@@ -29,11 +29,14 @@ Func _KVS_SaveDatabase()
 	)
 	
 	local $hDB = FileOpen($sfilePath, $FO_OVERWRITE + $FO_CREATEPATH)
+	
+	If $DEBUG Then
+		local $content = _JSON_Generate($g__KVS_Storage)
+	Else
+		local $content = _JSON_Generate($g__KVS_Storage, "", "", "", "", "", "", 0)
+	EndIf
 		
-	local $iResult = FileWrite( _
-		$hDB, _
-		_JSON_Generate($g__KVS_Storage, "", "", "", "", "", "", 0) _
-	)
+	local $iResult = FileWrite($hDB, $content)
 	If $iResult <> 1 Then
 		ConsoleWrite(StringFormat("Error: Can't dump file '%s' to disk.", $sFilePath) & @CRLF)
 		Return False

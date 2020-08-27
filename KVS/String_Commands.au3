@@ -15,6 +15,23 @@ Func _KVS_Command_Get($oCmd)
 EndFunc
 
 
+Func _KVS_Command_MGet($oCmd)
+	Local $aKeys = $oCmd("arguments")
+	Local $aReturnValues = __Array()
+	
+	For $i = 0 To UBound($aKeys) - 1
+		If $g__KVS_Storage.Exists($aKeys[$i]) Then
+			Local $value = $g__KVS_Storage.Item($aKeys[$i])
+			_ArrayAdd($aReturnValues, $value)
+			ContinueLoop
+		EndIf
+		_ArrayAdd($aReturnValues, Null)
+	Next
+	
+	Return _JSON_Generate($aReturnValues, "", "", "", "", "", "", 0)
+EndFunc
+
+
 ;~ Func _KVS_Command_Set($sKey, $sValue)
 Func _KVS_Command_Set($oCmd)
 	local $sKey = ($oCmd("arguments"))[0]
@@ -25,14 +42,26 @@ Func _KVS_Command_Set($oCmd)
 EndFunc
 
 
+Func _KVS_Command_MSet($oCmd)
+	Local $aCmdArgs = $oCmd("arguments")
+	
+	For $i = 0 To UBound($aCmdArgs) - 1 Step 2
+		$g__KVS_Storage.Item($aCmdArgs[$i]) = $aCmdArgs[$i+1]
+	Next
+	
+	Return "+OK"
+EndFunc
+
+
 ;~ Func _KVS_Command_Del($sKey)
 Func _KVS_Command_Del($oCmd)
-	local $sKey = ($oCmd("arguments"))[0]
-	If $g__KVS_Storage.Exists($sKey) Then
-		$g__KVS_Storage.Remove($sKey)
-		Return "+OK"
-	EndIf
-	Return SetError(1, 1, False)
+	local $aKeys = $oCmd("arguments")
+	For $i = 0 To UBound($aKeys) - 1
+		If $g__KVS_Storage.Exists($aKeys[$i]) Then
+			$g__KVS_Storage.Remove($aKeys[$i])
+		EndIf
+	Next
+	Return "+OK"
 EndFunc
 
 

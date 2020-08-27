@@ -26,6 +26,50 @@ Func _KVS_Command_RPush($oCmd)
 EndFunc
 
 
+Func _KVS_Command_RPop($oCmd)
+	Local $sKey = ($oCmd("arguments"))[0]
+	
+	If $g__KVS_Storage.Exists($sKey) Then
+		local $list = $g__KVS_Storage.Item($sKey)
+		local $lastIndex = UBound($list)-1
+		local $value = $list[$lastIndex]
+		_ArrayDelete($list, $lastIndex)
+		$g__KVS_Storage.Item($sKey) = $list
+		Return $value
+	EndIf
+	Return False
+EndFunc
+
+
+Func _KVS_Command_LPop($oCmd)
+	Local $sKey = ($oCmd("arguments"))[0]
+	
+	If $g__KVS_Storage.Exists($sKey) Then
+		Local $arr = $g__KVS_Storage.Item($sKey)
+		Local $val = $arr[0]
+		_ArrayDelete($arr, 0)
+		$g__KVS_Storage.Item($sKey) = $arr
+		Return $val
+	EndIf
+	Return False
+EndFunc
+
+
+Func _KVS_Command_LPush($oCmd)
+	Local $aCmdArgs = $oCmd("arguments")
+	Local $sKey = $aCmdArgs[0]
+	Local $aValues = _ArrayExtract($aCmdArgs, 1)
+	
+	If $g__KVS_Storage.Exists($sKey) Then
+		Local $aOldValues = $g__KVS_Storage.Item($sKey)
+		_ArrayConcatenate($aValues, $aOldValues)
+		$g__KVS_Storage.Item($sKey) = $aValues
+		Return StringFormat(":%d", UBound($aValues))
+	EndIf
+	Return False
+EndFunc
+
+
 Func _KVS_Command_LLen($oCmd)
 	Local $sKey = ($oCmd("arguments"))[0]
 	

@@ -11,6 +11,7 @@
 #include "KVS\Init.au3"
 #include "KVS\Commands.au3"
 #include "KVS\List_Commands.au3"
+#include "KVS\Hash_Commands.au3"
 #include "KVS\String_Commands.au3"
 #include "KVS\Sys_Commands.au3"
 #include "KVS\Database.au3"
@@ -18,6 +19,9 @@
 #include "KVS\Parse.au3"
 #include "KVS\Server.au3"
 #include "KVS\COM.au3"
+
+
+Global $DEBUG = True
 
 
 Global $g__KVS_Servername      = "KVS"
@@ -36,8 +40,14 @@ Global $g__KVS_ValidCommands   = [ _
 	"incr", _
 	"decr", _
 	"exists", _
+	"rename", _
+	"append", _
+	"strlen", _
 	"keys", _
 	"type", _
+	"lpop", _
+	"lpush", _
+	"rpop", _
 	"rpush", _
 	"llen", _
 	"lindex" _
