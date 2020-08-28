@@ -31,7 +31,7 @@ Func _KVS_SaveDatabase()
 	local $hDB = FileOpen($sfilePath, $FO_OVERWRITE + $FO_CREATEPATH)
 	
 	If $DEBUG Then
-		local $content = _JSON_Generate($g__KVS_Storage)
+		local $content = _JSON_Generate($g__KVS_Storage, @TAB, @CRLF, "", " ", @TAB, @CRLF)
 	Else
 		local $content = _JSON_Generate($g__KVS_Storage, "", "", "", "", "", "", 0)
 	EndIf

@@ -76,4 +76,69 @@ Func _KVS_Command_HExists($oCmd)
 	
 	Return ":0"
 EndFunc
+
+
+Func _KVS_Command_HKeys($oCmd)
+	Local $aCmdArgs = $oCmd("arguments")
+	Local $sKey = $aCmdArgs[0]
+;~ 	Local $sField = $aCmdArgs[1]
+	
+	If $g__KVS_Storage.Exists($sKey) Then
+		Local $oHash = $g__KVS_Storage.Item($sKey)
+		Local $aFields = $oHash.Keys
+		Return _JSON_Generate($aFields, "", "", "", "", "", "")
+	EndIf
+	
+	Return _JSON_Generate(__Array(), "", "", "", "", "", "")
+EndFunc
+
+
+Func _KVS_Command_HVals($oCmd)
+	Local $aCmdArgs = $oCmd("arguments")
+	Local $sKey = $aCmdArgs[0]
+	Local $aHashValues = __Array()
+	
+	If $g__KVS_Storage.Exists($sKey) Then
+		Local $oHash = $g__KVS_Storage.Item($sKey)
+		Local $aFields = $oHash.Keys
+		For $i = 0 To UBound($aFields) - 1
+			_ArrayAdd($aHashValues, $oHash.Item($aFields[$i]))
+		Next
+	EndIf
+	
+	Return _JSON_Generate($aHashValues, "", "", "", "", "", "")
+EndFunc
+
+
+Func _KVS_Command_HLen($oCmd)
+	Local $aCmdArgs = $oCmd("arguments")
+	Local $sKey = $aCmdArgs[0]
+	Local $iCount = 0
+	
+	If $g__KVS_Storage.Exists($sKey) Then
+		Local $oHash = $g__KVS_Storage.Item($sKey)
+		Local $aFields = $oHash.Keys
+		$iCount = UBound($aFields)
+	EndIf
+	
+	Return StringFormat(":%d", $iCount)
+EndFunc
+
+
+Func _KVS_Command_HStrlen($oCmd)
+	Local $aCmdArgs = $oCmd("arguments")
+	Local $sKey = $aCmdArgs[0]
+	Local $sField = $aCmdArgs[1]
+	Local $iCount = 0
+	
+	If $g__KVS_Storage.Exists($sKey) Then
+		Local $oHash = $g__KVS_Storage.Item($sKey)
+		If $oHash.Exists($sField) Then
+			Local $sValue = $oHash.Item($sField)
+			$iCount = StringLen($sValue)
+		EndIf
+	EndIf
+	
+	Return StringFormat(":%d", $iCount)
+EndFunc
 #EndRegion KVS Hash Command Functions
