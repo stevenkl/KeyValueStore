@@ -10,6 +10,11 @@ Func _KVS_ServerOnConnect($iSocket, $sIP)
 	$d.Add("servername", $g__KVS_Servername)
 	_TCPServer_Send($iSocket, _KVS_MessageData($d) & @CRLF)
 	
+	Local $params = __Dict()
+	$params.Add("datatype", "json")
+	_TCPServer_SetParam($iSocket, $params)
+	
+	Return True
 EndFunc
 
 
@@ -42,13 +47,20 @@ Func _KVS_ServerOnReceive($iSocket, $sIP, $sData, $sPar)
 	
 		$oCmd.Add("socket", $iSocket)
 		$oCmd.Add("ip", $sIP)
-		$oCmd.Add("params", $sPar)
+		$oCmd.Add("session_params", $sPar)
 		Local $result = _KVS_ExecuteCommand($oCmd)
 		
 		
-		_TCPServer_Send($iSocket, $result & @CRLF)
+		_TCPServer_Send($iSocket, _KVS_ServerResponse($result, $sPar))
 		
 	EndIf
 	
+EndFunc
+
+
+Func _KVS_ServerResponse($oResult, $sPar)
+	If $sPar.Item("datatype") = "json" Then
+		Return _JSON_Generate($oResult, "", "", "", "", "", "")
+	EndIf
 EndFunc
 #EndRegion KVS Server Functions
